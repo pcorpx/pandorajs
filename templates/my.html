@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<!-- Include base CSS (optional) -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/base.min.css">
+	<!-- Include Choices CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+	<!-- Include Choices JavaScript -->
+	<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+	<style type="text/css">
+		#wrapper {
+			width: 70%;
+			margin: 15px auto;
+		}
+		.choices {
+			color: #808080;
+		}
+		.choices__list--multiple .choices__item {
+			border-radius: 5px;
+			background-color: #9cabaf;
+			border-color: #9cabaf;
+		}
+		.choices .choices__list--multiple .is-highlighted{
+			background-color: #9cabaf;
+		}
+		.choices {
+			width: 85%;
+			float: left;
+
+		}
+		#btn {
+			font-family: Tahoma, sans-serif;
+			width: 13%;
+			height: 44px;
+			border: none;
+			float: right;
+			background-color: #e7e7e7;
+			border-radius: 5px;
+			font-size: 16px;
+		}
+		#btn:active {
+			background-color: #D8D8D8;
+		}
+		.clearfix::after {
+			content: "";
+			clear: both;
+			display: table;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<select name="demo-2" id="demo-2" placeholder="Ищите и обрящете.." multiple></select>
+		<button id="btn" >Показать</button>
+		<div class="clearfix"></div>
+		<div class="results">
+			<h3>Результаты выбора:</h3>
+			<ul id="res_lists">
+
+			</ul>
+		</div>
+	</div>
+	
+
+<script type="text/javascript">
+	
+	
+
+	const form = new Choices('#demo-2', {removeItemButton: true})
+
+
+
+	function setItems(data) {
+		form.clearChoices();
+		form.setChoices(data, 'value', 'label', false)
+	} 	
+
+
+
+	form.passedElement.element.addEventListener('search', function(event) {
+		console.log(event.detail.value)
+		if (event.detail.value == '') {
+			form.clearChoices();
+		}
+		fetch('http://127.0.0.1:5000/pandora/' + event.detail.value)
+		.then(function(response) {
+			response.json().then(function(data) {
+				selectedItems = document.querySelector(".choices__list--multiple").childNodes
+				filteredData = data['choices']
+				selectedItems.forEach(element => {
+					//console.log(element.dataset.value)
+					filteredData =  filteredData.filter(dropElement => {
+						console.log(dropElement.value, element.dataset.value)
+						return dropElement.value != element.dataset.value
+					})
+				});
+				console.log(data['choices'])
+				setItems (filteredData.sort());
+			});
+		})
+		.then(console.log(form))
+		.catch(function(error) {
+			console.log(error);
+		});
+	}, false)
+
+	
+	var btn = document.getElementById("btn");
+	btn.addEventListener("click", showResults)
+	const res = document.getElementById("res_lists");
+	function showResults () {
+		const values = form.getValue();
+		res.innerHTML = '';
+		console.log(res)
+		for (item in values) {
+			let li = document.createElement('li');
+			li.innerHTML = values[item]['label']
+			console.log(li)
+			res.appendChild(li)
+		}
+		
+	}
+
+
+</script>
+</body>
+</html>

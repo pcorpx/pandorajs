@@ -1,0 +1,11 @@
+{
+    choices: [
+        {value: "ivanov@kontur.ru", label: "Иванов Федор Ильич"},
+        {value: "ivanov@kontur.ru", label: "Петров Дмитрий Ильич"},
+        {value: "ivanov@kontur.ru", label: "Песков Виктор Ильич"},
+        {value: "ivanov@kontur.ru", label: "Деменьшин Павел Ильич"},
+        {value: "ivanov@kontur.ru", label: "Артюшкин Федор Германович"},
+        {value: "ivanov@kontur.ru", label: "Аксенов Олег Петрович"},
+        {value: "ivanov@kontur.ru", label: "Алтушкин Герасим Прокопьевич"},
+    ]
+}

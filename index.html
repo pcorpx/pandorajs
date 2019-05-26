@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Webpage</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    </head>
+    <body>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item active" aria-current="page">Home</li>
+              <li class="breadcrumb-item"><a href="project.html">My Project</a></li>
+              <li class="breadcrumb-item"><a href="library.html">Library</a></li>
+              <li class="breadcrumb-item"><a href="gallery.html">Gallery</a></li>
+            </ol>
+          </nav>
+          <h1> Прототип сервиса </h1>
+          <form action="{{ url_for('index') }}" method="POST">
+              <input type="text" name="note" placeholder="Enter Note Here">
+              <button>Submit</button>
+          </form>
+          <ul>
+            {% for note in notes %}
+            <li>{{ note }} </li>
+            {% endfor %}
+          </ul>
+    </body>
+</html>
